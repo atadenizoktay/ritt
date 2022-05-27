@@ -13,6 +13,17 @@ config_version=4
 config/name="Ritt"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=640
+window/size/height=360
+window/size/resizable=false
+window/size/always_on_top=true
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [physics]
 
 common/enable_pause_aware_picking=true
