@@ -45,9 +45,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Ritt"
+run/main_scene="res://src/Main/Level.tscn"
 boot_splash/image="res://assets/project/bootsplash.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+AudioManager="*res://src/Singleton/AudioManager.tscn"
 
 [display]
 

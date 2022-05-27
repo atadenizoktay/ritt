@@ -1,3 +1,18 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/midi/MidiPlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Main/Level.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/beat/main.ogg" type="AudioStream" id=3]
 
 [node name="Level" type="Node"]
+script = ExtResource( 2 )
+
+[node name="MainMidiPlayer" parent="." instance=ExtResource( 1 )]
+file = "res://assets/audio/beat/main.mid"
+loop = true
+bus = "Beat"
+
+[node name="MainBeatPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="midi_event" from="MainMidiPlayer" to="." method="_on_MainMidiPlayer_midi_event"]
