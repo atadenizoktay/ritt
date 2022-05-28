@@ -15,7 +15,7 @@ export(bool) var _is_rendering_sprites: bool = false setget \
 		_set_is_rendering_sprites
 export(bool) var _is_rotating_sprites: bool = true setget \
 		_set_is_rotating_sprites
-export(bool) var _is_weapon: bool = false
+#export(bool) var _is_weapon: bool = false
 export(float, 0.5, 3.2, 0.1) var _stack_position_offset_multiplier: float = 1
 
 var reference_sprite: Sprite = null
@@ -32,21 +32,22 @@ func _process(delta: float) -> void:
 	
 func _control_stack_preview_rotation(delta: float) -> void:
 	if _is_rotating_sprites:
-		for sprite in get_children():
-			sprite.rotation += delta
+		for child in get_children():
+			child.rotation += delta
 	
 
-func control_sprites_rotation(rotate_to: float) -> void:
-	for sprite in get_children():
-		sprite.rotation = rotate_to
+func control_children_rotation(rotate_to: float) -> void:
+	for child in get_children():
+		child.rotation = rotate_to
 	
 		
 func _clear_sprites() -> void:
 	if not _sprites_are_rendered:
 		return
 		
-	for sprite in get_children():
-		sprite.queue_free()
+	for child in get_children():
+		if child is Sprite:
+			child.queue_free()
 	_sprites_are_rendered = false
 	
 
@@ -60,9 +61,6 @@ func _render_sprites() -> void:
 		new_sprite.hframes = hframes
 		new_sprite.frame = i
 		new_sprite.position.y = -i * _stack_position_offset_multiplier
-		if _is_weapon:
-			new_sprite.offset = Vector2(texture.get_width() / hframes * frame, \
-					texture.get_height() / 2)
 		add_child(new_sprite)
 		if i == 0:
 			reference_sprite = new_sprite

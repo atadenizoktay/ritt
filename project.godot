@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/midi/MidiPlayer.gd"
 }, {
+"base": "Resource",
+"class": "PlayerAnimationData",
+"language": "GDScript",
+"path": "res://src/Resource/PlayerAnimationData.gd"
+}, {
 "base": "Reference",
 "class": "SMF",
 "language": "GDScript",
@@ -38,6 +43,7 @@ _global_script_class_icons={
 "AudioStreamPlayerADSR": "",
 "Bank": "",
 "MidiPlayer": "",
+"PlayerAnimationData": "",
 "SMF": "",
 "SoundFont": ""
 }
@@ -52,8 +58,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-AudioManager="*res://src/Singleton/AudioManager.tscn"
 Mixins="*res://src/Singleton/Mixins.gd"
+BeatManager="*res://src/Singleton/BeatManager.tscn"
+AudioManager="*res://src/Singleton/AudioManager.tscn"
 
 [display]
 
