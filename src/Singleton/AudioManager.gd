@@ -24,7 +24,7 @@ func _initialize_beat_related_nodes() -> void:
 	
 	
 func _on_BeatCounter_midi_event(\
-		channel: MidiPlayer.GodotMIDIPlayerChannelStatus, \
+		_channel: MidiPlayer.GodotMIDIPlayerChannelStatus, \
 		event: SMF.MIDIEvent) -> void:
 	if event.type == SMF.MIDIEventType.note_on:
 		emit_signal("beat_dropped")
