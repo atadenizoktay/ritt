@@ -8,11 +8,17 @@ extends KinematicBody2D
 """
 
 
+enum SwordStates {
+	IDLE = 0,
+	ATTACKING = 2
+}
+
 export(int, 100, 1000, 10) var _max_movement_speed: int = 120
 export(int, 1280, 3840, 10) var _movement_acceleration: int = 2560
 
 var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
+var _current_sword_state: int = SwordStates.IDLE
 
 onready var _PlayerSpriteStack: Sprite = $StackSorter/PlayerSpriteStack
 onready var _PlayerSwordStack: Sprite = \
@@ -45,9 +51,11 @@ func _update_stack_rotations() -> void:
 	
 	
 func _update_stack_positions() -> void:
-	_PlayerSwordStack.position = Vector2(-28 * sin( \
-			_PlayerSwordStack.reference_sprite.rotation), \
-			28 * cos(_PlayerSwordStack.reference_sprite.rotation))
+	if _velocity_vector != Vector2() and \
+			_current_sword_state == SwordStates.IDLE:
+		_PlayerSwordStack.position = Vector2(-28 * sin( \
+				_PlayerSwordStack.reference_sprite.rotation), \
+				28 * cos(_PlayerSwordStack.reference_sprite.rotation))
 			
 	
 # This function returns the movement axis depending on user input. It
@@ -74,3 +82,15 @@ func _apply_friction(friction_multiplier: float) -> void:
 		_velocity_vector -= _velocity_vector.normalized() * friction_multiplier
 	else:
 		_velocity_vector = Vector2()
+
+
+func _on_SwordAnimationPlayer_animation_started(anim_name: String) -> void:
+#	match anim_name:
+#		pass
+	pass
+
+
+func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
+#	match anim_name:
+#		pass
+	pass
