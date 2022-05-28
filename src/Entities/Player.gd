@@ -8,13 +8,13 @@ extends KinematicBody2D
 """
 
 
-export(int, 100, 1000, 10) var _max_movement_speed: int = 320
+export(int, 100, 1000, 10) var _max_movement_speed: int = 180
 export(int, 1280, 3840, 10) var _movement_acceleration: int = 2560
 
 var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
-
-
+	
+	
 func _physics_process(delta: float) -> void:
 	_control_player_movement(delta)
 	
