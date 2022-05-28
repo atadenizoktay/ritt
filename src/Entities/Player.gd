@@ -8,15 +8,20 @@ extends KinematicBody2D
 """
 
 
-export(int, 100, 1000, 10) var _max_movement_speed: int = 180
+export(int, 100, 1000, 10) var _max_movement_speed: int = 120
 export(int, 1280, 3840, 10) var _movement_acceleration: int = 2560
 
 var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
-	
+
+onready var _PlayerSpriteStack: Sprite = $StackSorter/PlayerSpriteStack
+onready var _PlayerSwordStack: Sprite = $StackSorter/SwordSpriteStack
+
 	
 func _physics_process(delta: float) -> void:
 	_control_player_movement(delta)
+	_update_stack_rotations()
+	_update_stack_positions()
 	
 
 # Controls the player movement by first getting player input, and then applying
@@ -30,6 +35,20 @@ func _control_player_movement(delta: float) -> void:
 	move_and_slide(_velocity_vector)
 	
 
+func _update_stack_rotations() -> void:
+	if _velocity_vector != Vector2():
+		_PlayerSpriteStack.control_sprites_rotation(_velocity_vector.angle() - \
+				deg2rad(90))
+		_PlayerSwordStack.control_sprites_rotation(_velocity_vector.angle() - \
+				deg2rad(90))
+	
+	
+func _update_stack_positions() -> void:
+	_PlayerSwordStack.position = Vector2(-24 * sin( \
+			_PlayerSwordStack.get_children()[0].rotation), \
+			24 * cos(_PlayerSwordStack.get_children()[0].rotation))
+			
+	
 # This function returns the movement axis depending on user input. It
 # additionally resets the velocity vector of the player if it takes a turn so
 # that the player movement is more responsive.

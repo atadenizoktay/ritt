@@ -23,15 +23,20 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	_control_stack_rotation(delta)
+	_control_stack_preview_rotation(delta)
 	
 	
-func _control_stack_rotation(delta: float) -> void:
+func _control_stack_preview_rotation(delta: float) -> void:
 	if _is_rotating_sprites:
 		for sprite in get_children():
 			sprite.rotation += delta
 	
-	
+
+func control_sprites_rotation(rotate_to: float) -> void:
+	for sprite in get_children():
+		sprite.rotation = rotate_to
+		
+		
 func _clear_sprites() -> void:
 	for sprite in get_children():
 		sprite.queue_free()
