@@ -37,11 +37,6 @@ func _control_stack_preview_rotation(delta: float) -> void:
 func control_sprites_rotation(rotate_to: float) -> void:
 	for sprite in get_children():
 		sprite.rotation = rotate_to
-		
-	
-func control_sprites_position(global_position_vector: Vector2) -> void:
-	for sprite in get_children():
-		sprite.global_position = global_position_vector
 	
 		
 func _clear_sprites() -> void:

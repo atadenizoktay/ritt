@@ -15,7 +15,8 @@ var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
 
 onready var _PlayerSpriteStack: Sprite = $StackSorter/PlayerSpriteStack
-onready var _PlayerSwordStack: Sprite = $StackSorter/SwordSpriteStack
+onready var _PlayerSwordStack: Sprite = \
+		$StackSorter/SwordContainer/SwordSpriteStack
 
 	
 func _physics_process(delta: float) -> void:
@@ -44,11 +45,9 @@ func _update_stack_rotations() -> void:
 	
 	
 func _update_stack_positions() -> void:
-	var position_offset: Vector2 = Vector2(-24 * sin( \
+	_PlayerSwordStack.position = Vector2(-28 * sin( \
 			_PlayerSwordStack.reference_sprite.rotation), \
-			24 * cos(_PlayerSwordStack.reference_sprite.rotation))
-	_PlayerSwordStack.control_sprites_position(global_position + \
-			position_offset)
+			28 * cos(_PlayerSwordStack.reference_sprite.rotation))
 			
 	
 # This function returns the movement axis depending on user input. It
