@@ -44,9 +44,11 @@ func _update_stack_rotations() -> void:
 	
 	
 func _update_stack_positions() -> void:
-	_PlayerSwordStack.position = Vector2(-24 * sin( \
-			_PlayerSwordStack.get_children()[0].rotation), \
-			24 * cos(_PlayerSwordStack.get_children()[0].rotation))
+	var position_offset: Vector2 = Vector2(-24 * sin( \
+			_PlayerSwordStack.reference_sprite.rotation), \
+			24 * cos(_PlayerSwordStack.reference_sprite.rotation))
+	_PlayerSwordStack.control_sprites_position(global_position + \
+			position_offset)
 			
 	
 # This function returns the movement axis depending on user input. It

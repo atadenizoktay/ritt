@@ -17,6 +17,8 @@ export(bool) var _is_rotating_sprites: bool = true setget \
 		_set_is_rotating_sprites
 export(float, 0.5, 3.2, 0.1) var _stack_position_offset_multiplier: float = 1
 
+var reference_sprite: Sprite = null
+
 
 func _ready() -> void:
 	_render_sprites()
@@ -36,6 +38,11 @@ func control_sprites_rotation(rotate_to: float) -> void:
 	for sprite in get_children():
 		sprite.rotation = rotate_to
 		
+	
+func control_sprites_position(global_position_vector: Vector2) -> void:
+	for sprite in get_children():
+		sprite.global_position = global_position_vector
+	
 		
 func _clear_sprites() -> void:
 	for sprite in get_children():
@@ -50,6 +57,8 @@ func _render_sprites() -> void:
 		new_sprite.frame = i
 		new_sprite.position.y = -i * _stack_position_offset_multiplier
 		add_child(new_sprite)
+		if i == 0:
+			reference_sprite = new_sprite
 
 
 func _set_is_rendering_sprites(rendering: bool) -> void:
