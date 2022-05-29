@@ -45,6 +45,18 @@ func _update_stack_rotations(_delta: float) -> void:
 	pass
 	
 
+func _control_knowckback_wobble() -> void:
+	if _current_movement_state == MovementStates.KNOCKBACKED:
+		_CharacterSpriteStack.scale.y = range_lerp( \
+				_temp_additional_velocity_vector.length(), \
+				0, _combat_stats_data.MAX_WOBBLE_KNOCKBACK_VECTOR_LENGTH, \
+				1.5, 1.25)
+		_CharacterSpriteStack.scale.x = range_lerp( \
+				_temp_additional_velocity_vector.length(), \
+				0, _combat_stats_data.MAX_WOBBLE_KNOCKBACK_VECTOR_LENGTH, \
+				1.5, 2)
+
+
 func apply_knockback_effect(attacker: Object, power: int = 100, \
 		duration: float = 0.4) -> void:
 	_current_movement_state = MovementStates.KNOCKBACKED

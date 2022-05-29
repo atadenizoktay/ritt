@@ -119,6 +119,7 @@ func _on_beat_dropped() -> void:
 func _on_SwordArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		if _current_sword_state == SwordStates.ATTACKING:
+			_request_to_play_sound_effect("hit")
 			body.apply_knockback_effect(self, \
 					_combat_stats_data.knockback_power, \
 					_combat_stats_data.knockback_duration)

@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
+hit_sfx_path = "res://assets/audio/sound/sword/hit.wav"
+hit_sfx_db = -16.0
 windup_sfx_path = "res://assets/audio/sound/sword/windup.wav"
 windup_sfx_db = -16.0
 swing_high_sfx_path = "res://assets/audio/sound/sword/swing_high.wav"

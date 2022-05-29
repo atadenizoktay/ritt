@@ -19,6 +19,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_control_character_movement(delta)
 	_update_stack_rotations(delta)
+	_control_knowckback_wobble()
 
 
 func _initialize_signal_connections() -> void:

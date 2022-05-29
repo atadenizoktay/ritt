@@ -17,6 +17,7 @@ export(bool) var _is_rotating_sprites: bool = true setget \
 		_set_is_rotating_sprites
 #export(bool) var _is_weapon: bool = false
 export(float, 0.5, 3.2, 0.1) var _stack_position_offset_multiplier: float = 1
+export(int, -100, 100, 1) var _sprites_y_offset: int = 0
 
 var reference_sprite: Sprite = null
 var _sprites_are_rendered: bool = false
@@ -61,6 +62,7 @@ func _render_sprites() -> void:
 		new_sprite.hframes = hframes
 		new_sprite.frame = i
 		new_sprite.position.y = -i * _stack_position_offset_multiplier
+		new_sprite.offset.y = _sprites_y_offset
 		add_child(new_sprite)
 		if i == 0:
 			reference_sprite = new_sprite

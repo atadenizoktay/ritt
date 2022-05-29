@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
+hit_sfx_path = "res://assets/audio/sound/sword/hit.wav"
+hit_sfx_db = -16.0

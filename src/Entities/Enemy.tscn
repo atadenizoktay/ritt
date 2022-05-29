@@ -8,7 +8,7 @@
 [ext_resource path="res://resources/entities/default_enemy_sfx_data.tres" type="Resource" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 7.0
+radius = 6.0
 height = 0.0
 
 [node name="Enemy" type="KinematicBody2D" groups=["Enemy"]]
@@ -26,12 +26,10 @@ hframes = 12
 _is_rendering_sprites = true
 _is_rotating_sprites = false
 _stack_position_offset_multiplier = 1.2
+_sprites_y_offset = -3
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1 )
+position = Vector2( 0, -5 )
 shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Tween" type="Tween" parent="."]
