@@ -88,7 +88,6 @@ _sfx_data = ExtResource( 6 )
 [node name="Stacks" type="YSort" parent="."]
 
 [node name="CharacterSpriteStack" parent="Stacks" instance=ExtResource( 3 )]
-visible = false
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 hframes = 12
