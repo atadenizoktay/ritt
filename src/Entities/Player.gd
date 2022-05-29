@@ -11,12 +11,15 @@ extends Character
 enum SwordStates {
 	IDLE = 0,
 	PREPARING_TO_ATTACK = 1,
-	ATTACKING = 2
+	ATTACKING = 2,
+	RECOVERY = 3
 }
 
 var _previous_movement_axis: Vector2 = Vector2()
 var _current_sword_state: int = SwordStates.IDLE setget \
 		_set_current_sword_state
+var _attack_commands_queue: Array = ["slice", "basic", "flurry", \
+		"whirlwind"]
 
 onready var _PlayerSwordStack: Sprite = \
 		$Stacks/SwordContainer/SwordSpriteStack
@@ -112,7 +115,7 @@ func _on_SwordAnimationPlayer_animation_started(anim_name: String) -> void:
 	match anim_name:
 		"idle":
 			_current_sword_state = SwordStates.IDLE
-		"whirlwind":
+		"basic", "slice", "flurry", "whirlwind":
 			_current_sword_state = SwordStates.PREPARING_TO_ATTACK
 
 
@@ -120,7 +123,7 @@ func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
 	match anim_name:
 		"idle":
 			_SwordAnimationPlayer.play("idle")
-		"whirlwind":
+		"basic", "slice", "flurry", "whirlwind":
 			_SwordAnimationPlayer.play("idle")
 
 
@@ -128,8 +131,15 @@ func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
 # animation.
 func _on_beat_dropped() -> void:
 	if health_data.is_alive:
-		_SwordAnimationPlayer.play("whirlwind")
+		_queue_attack_and_play_animation()
 
+
+func _queue_attack_and_play_animation() -> void:
+	var command_name: String = _attack_commands_queue[0]
+	_attack_commands_queue.pop_front()
+	_attack_commands_queue.append(command_name)
+	_SwordAnimationPlayer.play(command_name)
+	
 
 func _on_SwordArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):

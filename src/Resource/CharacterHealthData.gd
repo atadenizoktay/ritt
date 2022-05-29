@@ -29,7 +29,7 @@ func reset(owner: KinematicBody2D, invul_timer: Timer) -> void:
 func take_damage(damage_amount: float) -> void:
 	_current_hp = max(0, _current_hp - damage_amount)
 	if not _current_hp:
-		if _owner.is_in_group("Enemy"): # remove
+		if false: # remove
 			can_get_hit = false
 			is_alive = false
 			_owner.die()

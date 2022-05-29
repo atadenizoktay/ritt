@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 hit_sfx_path = "res://assets/audio/sound/sword/hit.wav"
-hit_sfx_db = -16.0
+hit_sfx_db = 4.0
 windup_sfx_path = "res://assets/audio/sound/sword/windup.wav"
-windup_sfx_db = -16.0
+windup_sfx_db = -4.0
 swing_high_sfx_path = "res://assets/audio/sound/sword/swing_high.wav"
-swing_high_sfx_db = -20.0
+swing_high_sfx_db = -4.0
 swing_low_sfx_path = "res://assets/audio/sound/sword/swing_low.wav"
 swing_low_sfx_db = 0.0

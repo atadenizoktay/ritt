@@ -127,15 +127,19 @@ polygon = PoolVector2Array( 0, 0, 320, 0, 320, 180, 336, 196, 336, -16, -16, -16
 position = Vector2( 160, 90 )
 
 [node name="Enemy" parent="EntityHierarchy" instance=ExtResource( 4 )]
-position = Vector2( 47, 67 )
+position = Vector2( 64, 64 )
 health_data = SubResource( 1 )
 
 [node name="Enemy2" parent="EntityHierarchy" instance=ExtResource( 4 )]
-position = Vector2( 130, 56 )
+position = Vector2( 256, 64 )
 health_data = SubResource( 2 )
 
 [node name="Enemy3" parent="EntityHierarchy" instance=ExtResource( 4 )]
-position = Vector2( 81, 122 )
+position = Vector2( 64, 128 )
+health_data = SubResource( 3 )
+
+[node name="Enemy4" parent="EntityHierarchy" instance=ExtResource( 4 )]
+position = Vector2( 256, 128 )
 health_data = SubResource( 3 )
 
 [node name="Camera" parent="." instance=ExtResource( 3 )]

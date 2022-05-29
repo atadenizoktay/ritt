@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/Entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/entities/player_spritesheet.png" type="Texture" id=2]
@@ -11,11 +11,127 @@
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 9.0
-height = 18.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
 height = 0.0
+
+[sub_resource type="Animation" id=6]
+resource_name = "basic"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1 ),
+"update": 0,
+"values": [ 0.0, 64.0, -64.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "flurry"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 75.0, -75.0, 75.0, -75.0, 75.0, -75.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
+"method": "_set_current_sword_state"
+} ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -33,7 +149,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "whirlwind"
+resource_name = "slice"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
 tracks/0/interp = 1
@@ -77,6 +193,58 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ 2 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "whirlwind"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0, -180.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
 "method": "_set_current_sword_state"
 } ]
 }
@@ -125,8 +293,11 @@ position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
 [node name="SwordAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/basic = SubResource( 6 )
+anims/flurry = SubResource( 7 )
 anims/idle = SubResource( 3 )
-anims/whirlwind = SubResource( 2 )
+anims/slice = SubResource( 2 )
+anims/whirlwind = SubResource( 5 )
 
 [node name="Tween" type="Tween" parent="."]
 

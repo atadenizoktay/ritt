@@ -6,6 +6,8 @@
 offset = Vector2( 160, 90 )
 current = true
 script = ExtResource( 1 )
+_beat_zoom_in_vector = Vector2( 0.8, 0.8 )
+_beat_zoom_tween_duration = 0.52
 _max_shake_power = 16
 _screen_shake_duration = 0.32
 
