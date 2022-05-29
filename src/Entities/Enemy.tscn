@@ -11,7 +11,7 @@
 radius = 7.0
 height = 0.0
 
-[node name="Enemy" type="KinematicBody2D"]
+[node name="Enemy" type="KinematicBody2D" groups=["Enemy"]]
 script = ExtResource( 3 )
 _combat_stats_data = ExtResource( 4 )
 _animation_data = ExtResource( 5 )
@@ -33,3 +33,5 @@ shape = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Tween" type="Tween" parent="."]

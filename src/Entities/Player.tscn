@@ -62,6 +62,20 @@ tracks/1/keys = {
 "method": "_request_to_play_sound_effect"
 } ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+} ]
+}
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 1 )
@@ -105,5 +119,8 @@ __meta__ = {
 anims/idle = SubResource( 3 )
 anims/whirlwind = SubResource( 2 )
 
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="body_entered" from="Stacks/SwordContainer/SwordSpriteStack/SwordArea" to="." method="_on_SwordArea_body_entered"]
 [connection signal="animation_finished" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_finished"]
 [connection signal="animation_started" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_started"]

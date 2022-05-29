@@ -10,11 +10,13 @@ extends Character
 
 enum SwordStates {
 	IDLE = 0,
+	PREPARING_TO_ATTACK = 1,
 	ATTACKING = 2
 }
 
 var _previous_movement_axis: Vector2 = Vector2()
-var _current_sword_state: int = SwordStates.IDLE
+var _current_sword_state: int = SwordStates.IDLE setget \
+		_set_current_sword_state
 
 onready var _PlayerSwordStack: Sprite = \
 		$Stacks/SwordContainer/SwordSpriteStack
@@ -86,21 +88,25 @@ func _apply_friction(friction_multiplier: float) -> void:
 		_velocity_vector = Vector2()
 
 
+func _set_current_sword_state(state: int) -> void:
+	_current_sword_state = state
+	
+	
 func _on_SwordAnimationPlayer_animation_started(anim_name: String) -> void:
 	_SwordAnimationPlayer.playback_speed = _animation_data. \
 			get("%s_as" % anim_name)
 	match anim_name:
 		"idle":
 			_current_sword_state = SwordStates.IDLE
-		"left_attack":
-			_current_sword_state = SwordStates.ATTACKING
+		"whirlwind":
+			_current_sword_state = SwordStates.PREPARING_TO_ATTACK
 
 
 func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
 	match anim_name:
 		"idle":
 			_SwordAnimationPlayer.play("idle")
-		"left_attack":
+		"whirlwind":
 			_SwordAnimationPlayer.play("idle")
 
 
@@ -108,3 +114,11 @@ func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
 # animation.
 func _on_beat_dropped() -> void:
 	_SwordAnimationPlayer.play("whirlwind")
+
+
+func _on_SwordArea_body_entered(body: Node) -> void:
+	if body.is_in_group("Enemy"):
+		if _current_sword_state == SwordStates.ATTACKING:
+			body.apply_knockback_effect(self, \
+					_combat_stats_data.knockback_power, \
+					_combat_stats_data.knockback_duration)

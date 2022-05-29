@@ -6,4 +6,6 @@
 script = ExtResource( 1 )
 max_movement_speed = 120
 movement_acceleration = 2560
+knockback_power = 250
+knockback_duration = 0.52
 weapon_stack_rotation_speed = 52

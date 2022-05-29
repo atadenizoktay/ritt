@@ -13,7 +13,7 @@ onready var _Player: KinematicBody2D = \
 
 
 func _ready() -> void:
-	pass
+	_initialize_signal_connections()
 	
 
 func _physics_process(delta: float) -> void:
@@ -22,14 +22,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _initialize_signal_connections() -> void:
-	pass
+	_Tween.connect("tween_completed", self, "on_Tween_completed")
 	
 	
 func _control_character_movement(delta: float) -> void:
 	var movement_axis: Vector2 = (_Player.position - position).normalized()
 	_apply_movement(movement_axis * \
 			_combat_stats_data.movement_acceleration * delta)
-	move_and_slide(_velocity_vector)
+	move_and_slide(_velocity_vector + _temp_additional_velocity_vector)
 	
 	
 func _update_stack_rotations(_delta: float) -> void:

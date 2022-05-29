@@ -69,7 +69,10 @@ func _render_sprites() -> void:
 
 func _set_is_rendering_sprites(rendering: bool) -> void:
 	_is_rendering_sprites = rendering
-	_render_sprites() if _is_rendering_sprites else _clear_sprites()
+	if _is_rendering_sprites:
+		_render_sprites()
+		return
+	_clear_sprites()
 
 
 func _set_is_rotating_sprites(rotating: bool) -> void:
