@@ -26,12 +26,17 @@ var _temp_additional_velocity_vector: Vector2 = Vector2()
 
 onready var _CharacterSpriteStack: Sprite = $Stacks/CharacterSpriteStack
 onready var _Tween: Tween = $Tween
+onready var _InvulTimer: Timer = $InvulTimer
 
 
 func _initialize_signal_connections() -> void:
 	pass
 	
 
+func _initialize_data_resources() -> void:
+	health_data.reset(self, _InvulTimer)
+	
+	
 func _control_character_movement(_delta: float) -> void:
 	pass
 	

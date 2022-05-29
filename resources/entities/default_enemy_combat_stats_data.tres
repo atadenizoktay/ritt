@@ -8,3 +8,4 @@ max_movement_speed = 52
 movement_acceleration = 1280
 knockback_power = 250
 knockback_duration = 0.32
+attack_damage = 2

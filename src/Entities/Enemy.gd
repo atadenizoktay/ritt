@@ -13,6 +13,7 @@ onready var _Player: KinematicBody2D = \
 
 
 func _ready() -> void:
+	_initialize_data_resources()
 	_initialize_signal_connections()
 	
 
@@ -24,6 +25,7 @@ func _physics_process(delta: float) -> void:
 
 func _initialize_signal_connections() -> void:
 	_Tween.connect("tween_completed", self, "on_Tween_completed")
+	_InvulTimer.connect("timeout", health_data, "_on_InvulTimer_timeout")
 	
 	
 func _control_character_movement(delta: float) -> void:

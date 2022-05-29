@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource( 1 )
 _max_hp = 20.0
+_invul_duration = 0.4

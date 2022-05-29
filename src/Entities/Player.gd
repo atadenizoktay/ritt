@@ -24,6 +24,7 @@ onready var _SwordAnimationPlayer: AnimationPlayer = $SwordAnimationPlayer
 
 
 func _ready() -> void:
+	_initialize_data_resources()
 	_initialize_signal_connections()
 	
 	
@@ -35,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	
 func _initialize_signal_connections() -> void:
 	BeatManager.connect("beat_dropped", self, "_on_beat_dropped")
+	_InvulTimer.connect("timeout", health_data, "_on_InvulTimer_timeout")
 
 
 # Controls the player movement by first getting player input, and then applying
@@ -118,8 +120,11 @@ func _on_beat_dropped() -> void:
 
 func _on_SwordArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
-		if _current_sword_state == SwordStates.ATTACKING:
+		if _current_sword_state == SwordStates.ATTACKING and \
+				body.health_data.can_get_hit:
 			_request_to_play_sound_effect("hit")
+			body.health_data.can_get_hit = false
+			body.health_data.take_damage(_combat_stats_data.attack_damage)
 			body.apply_knockback_effect(self, \
 					_combat_stats_data.knockback_power, \
 					_combat_stats_data.knockback_duration)

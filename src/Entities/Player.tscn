@@ -122,6 +122,9 @@ anims/whirlwind = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="InvulTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="Stacks/SwordContainer/SwordSpriteStack/SwordArea" to="." method="_on_SwordArea_body_entered"]
 [connection signal="animation_finished" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_finished"]
 [connection signal="animation_started" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_started"]
