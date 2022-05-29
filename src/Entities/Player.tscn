@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/entities/player_spritesheet.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/entities/sword_spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://resources/entities/default_player_animation_data.tres" type="Resource" id=5]
 [ext_resource path="res://resources/entities/default_player_sfx_data.tres" type="Resource" id=6]
+[ext_resource path="res://resources/entities/default_player_combat_stats_data.tres" type="Resource" id=7]
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 9.0
@@ -65,6 +66,7 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 _sfx_data = ExtResource( 6 )
+_player_combat_stats_data = ExtResource( 7 )
 _player_animation_data = ExtResource( 5 )
 
 [node name="StackSorter" type="YSort" parent="."]
@@ -77,7 +79,6 @@ _is_rotating_sprites = false
 _stack_position_offset_multiplier = 1.2
 
 [node name="SwordContainer" type="Node2D" parent="StackSorter"]
-rotation = 1.11701
 z_index = -8
 
 [node name="SwordSpriteStack" parent="StackSorter/SwordContainer" instance=ExtResource( 3 )]

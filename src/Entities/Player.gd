@@ -13,9 +13,7 @@ enum SwordStates {
 	ATTACKING = 2
 }
 
-export(int, 100, 1000, 10) var _max_movement_speed: int = 120
-export(int, 1280, 3840, 10) var _movement_acceleration: int = 2560
-export(int, 10, 100, 1) var _weapon_stack_rotation_speed: int = 52
+export(Resource) var _player_combat_stats_data: Resource = null
 export(Resource) var _player_animation_data: Resource = null
 
 var _velocity_vector: Vector2 = Vector2()
@@ -47,9 +45,10 @@ func _initialize_signal_connections() -> void:
 func _control_player_movement(delta: float) -> void:
 	var movement_axis: Vector2 = _control_movement_feel_and_get_movement_axis()
 	if movement_axis:
-		_apply_movement(movement_axis * _movement_acceleration * delta)
+		_apply_movement(movement_axis * \
+				_player_combat_stats_data.movement_acceleration * delta)
 	else:
-		_apply_friction(_movement_acceleration * delta)
+		_apply_friction(_player_combat_stats_data.movement_acceleration * delta)
 	move_and_slide(_velocity_vector)
 	
 
@@ -60,7 +59,8 @@ func _update_stack_rotations(delta: float) -> void:
 					_velocity_vector.angle() - deg2rad(90))
 		_PlayerSwordStack.control_children_rotation( \
 				_PlayerSwordStack.reference_sprite.rotation - \
-				deg2rad(delta * _weapon_stack_rotation_speed))
+				deg2rad(delta * \
+						_player_combat_stats_data.weapon_stack_rotation_speed))
 	
 	
 func _update_stack_positions() -> void:
@@ -86,7 +86,8 @@ func _control_movement_feel_and_get_movement_axis() -> Vector2:
 	
 func _apply_movement(acceleration_vector: Vector2) -> void:
 	_velocity_vector += acceleration_vector
-	_velocity_vector = _velocity_vector.clamped(_max_movement_speed)
+	_velocity_vector = _velocity_vector.clamped( \
+			_player_combat_stats_data.max_movement_speed)
 
 
 func _apply_friction(friction_multiplier: float) -> void:
