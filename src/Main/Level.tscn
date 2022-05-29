@@ -1,9 +1,28 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Main/Level.gd" type="Script" id=2]
 [ext_resource path="res://src/Entities/Camera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Entities/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Resource/CharacterHealthData.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+_max_hp = 4.0
+_invul_duration = 0.8
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+_max_hp = 4.0
+_invul_duration = 0.8
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+_max_hp = 4.0
+_invul_duration = 0.8
 
 [node name="Level" type="Node"]
 script = ExtResource( 2 )
@@ -15,12 +34,15 @@ position = Vector2( 160, 90 )
 
 [node name="Enemy" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 47, 67 )
+health_data = SubResource( 1 )
 
 [node name="Enemy2" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 130, 56 )
+health_data = SubResource( 2 )
 
 [node name="Enemy3" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 81, 122 )
+health_data = SubResource( 3 )
 
 [node name="Camera" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 90 )

@@ -38,3 +38,8 @@ func _control_character_movement(delta: float) -> void:
 func _update_stack_rotations(_delta: float) -> void:
 	_CharacterSpriteStack.control_children_rotation( \
 					_velocity_vector.angle() - deg2rad(90))
+
+
+func die() -> void:
+	_CharacterSpriteStack.fade_out_sprites()
+	

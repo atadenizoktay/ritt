@@ -15,12 +15,16 @@ export(bool) var _is_rendering_sprites: bool = false setget \
 		_set_is_rendering_sprites
 export(bool) var _is_rotating_sprites: bool = true setget \
 		_set_is_rotating_sprites
-#export(bool) var _is_weapon: bool = false
 export(float, 0.5, 3.2, 0.1) var _stack_position_offset_multiplier: float = 1
 export(int, -100, 100, 1) var _sprites_y_offset: int = 0
+export(float, 0.2, 3.2, 0.1) var _stack_fade_out_duration: float = 1.2
+export(float, 0.1, 0.8, 0.01) var \
+		_stack_last_sprite_minimum_fade_out_duration: float = 0.2
 
 var reference_sprite: Sprite = null
 var _sprites_are_rendered: bool = false
+
+onready var _Tween: Tween = $Tween
 
 
 func _ready() -> void:
@@ -34,12 +38,14 @@ func _process(delta: float) -> void:
 func _control_stack_preview_rotation(delta: float) -> void:
 	if _is_rotating_sprites:
 		for child in get_children():
-			child.rotation += delta
+			if child.get("rotation") != null:
+				child.rotation += delta
 	
 
 func control_children_rotation(rotate_to: float) -> void:
 	for child in get_children():
-		child.rotation = rotate_to
+		if child is Sprite:
+			child.rotation = rotate_to
 	
 		
 func _clear_sprites() -> void:
@@ -69,6 +75,21 @@ func _render_sprites() -> void:
 	_sprites_are_rendered = true
 
 
+func fade_out_sprites() -> void:
+	var delay: float = 0
+	var delay_increment: float = _stack_fade_out_duration / hframes
+	for child in get_children():
+		if child is Sprite:
+			_Tween.interpolate_property(child, "modulate", child.modulate, \
+					Color.transparent, (_stack_fade_out_duration - delay) if \
+					(_stack_fade_out_duration - delay) > \
+					_stack_last_sprite_minimum_fade_out_duration else \
+					_stack_last_sprite_minimum_fade_out_duration, \
+					Tween.TRANS_QUAD, Tween.EASE_OUT, delay)
+			_Tween.start()
+			delay += delay_increment
+			
+
 func _set_is_rendering_sprites(rendering: bool) -> void:
 	_is_rendering_sprites = rendering
 	if _is_rendering_sprites:
@@ -80,5 +101,6 @@ func _set_is_rendering_sprites(rendering: bool) -> void:
 func _set_is_rotating_sprites(rotating: bool) -> void:
 	_is_rotating_sprites = rotating
 	if not rotating:
-		for sprite in get_children():
-				sprite.rotation = 0
+		for child in get_children():
+			if child is Sprite:
+				child.rotation = 0

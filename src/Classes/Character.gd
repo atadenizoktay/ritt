@@ -42,9 +42,12 @@ func _control_character_movement(_delta: float) -> void:
 	
 	
 func _apply_movement(acceleration_vector: Vector2) -> void:
-	_velocity_vector += acceleration_vector
-	_velocity_vector = _velocity_vector.clamped( \
-			_combat_stats_data.max_movement_speed)
+	if health_data.is_alive:
+		_velocity_vector += acceleration_vector
+		_velocity_vector = _velocity_vector.clamped( \
+				_combat_stats_data.max_movement_speed)
+		return
+	_velocity_vector = Vector2()
 			
 			
 func _update_stack_rotations(_delta: float) -> void:
@@ -81,6 +84,10 @@ func _request_to_play_sound_effect(effect_identifier: String) -> void:
 			% effect_identifier))
 
 
+func die() -> void:
+	pass
+	
+	
 func on_Tween_completed(object: Object, key: NodePath) -> void:
 	if object != self:
 		return

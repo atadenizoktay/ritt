@@ -11,7 +11,7 @@
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 9.0
-height = 14.0
+height = 22.0
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
@@ -104,12 +104,13 @@ texture = ExtResource( 4 )
 hframes = 8
 _is_rendering_sprites = true
 _is_rotating_sprites = false
+_stack_last_sprite_minimum_fade_out_duration = 0.3
 
 [node name="SwordArea" type="Area2D" parent="Stacks/SwordContainer/SwordSpriteStack"]
 monitorable = false
 
 [node name="Collision" type="CollisionShape2D" parent="Stacks/SwordContainer/SwordSpriteStack/SwordArea"]
-position = Vector2( 0, 1 )
+position = Vector2( 0, -3 )
 shape = SubResource( 4 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
