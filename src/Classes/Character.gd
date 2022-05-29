@@ -25,6 +25,7 @@ var _velocity_vector: Vector2 = Vector2()
 var _temp_additional_velocity_vector: Vector2 = Vector2()
 
 onready var _CharacterSpriteStack: Sprite = $Stacks/CharacterSpriteStack
+onready var _Collision: CollisionShape2D = $Collision
 onready var _Tween: Tween = $Tween
 onready var _InvulTimer: Timer = $InvulTimer
 

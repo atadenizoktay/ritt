@@ -44,7 +44,7 @@ func _control_stack_preview_rotation(delta: float) -> void:
 
 func control_children_rotation(rotate_to: float) -> void:
 	for child in get_children():
-		if child is Sprite:
+		if child.get("rotation") != null:
 			child.rotation = rotate_to
 	
 		

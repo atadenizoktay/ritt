@@ -11,7 +11,7 @@
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 9.0
-height = 22.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
@@ -88,6 +88,7 @@ _sfx_data = ExtResource( 6 )
 [node name="Stacks" type="YSort" parent="."]
 
 [node name="CharacterSpriteStack" parent="Stacks" instance=ExtResource( 3 )]
+visible = false
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 hframes = 12
@@ -111,7 +112,6 @@ _stack_last_sprite_minimum_fade_out_duration = 0.3
 monitorable = false
 
 [node name="Collision" type="CollisionShape2D" parent="Stacks/SwordContainer/SwordSpriteStack/SwordArea"]
-position = Vector2( 0, -3 )
 shape = SubResource( 4 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]

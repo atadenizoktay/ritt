@@ -41,5 +41,6 @@ func _update_stack_rotations(_delta: float) -> void:
 
 
 func die() -> void:
+	_Collision.set_deferred("disabled", true)
 	_CharacterSpriteStack.fade_out_sprites()
 	
