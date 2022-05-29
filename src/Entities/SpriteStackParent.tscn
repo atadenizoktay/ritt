@@ -4,6 +4,7 @@
 
 [node name="SpriteStackParent" type="Sprite"]
 self_modulate = Color( 1, 1, 1, 0 )
+z_index = 16
 script = ExtResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
