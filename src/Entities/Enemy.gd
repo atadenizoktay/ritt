@@ -15,6 +15,7 @@ onready var _Player: KinematicBody2D = \
 func _ready() -> void:
 	_initialize_data_resources()
 	_initialize_signal_connections()
+	_spawn_character()
 	
 
 func _physics_process(delta: float) -> void:
@@ -25,6 +26,8 @@ func _physics_process(delta: float) -> void:
 
 func _initialize_signal_connections() -> void:
 	_Tween.connect("tween_completed", self, "on_Tween_completed")
+	_CharacterSpriteStack.StackTween.connect("tween_completed", self, \
+			"_on_CharacterSpriteStack_StackTween_completed")
 	_InvulTimer.connect("timeout", health_data, "_on_InvulTimer_timeout")
 	
 	
@@ -36,11 +39,11 @@ func _control_character_movement(delta: float) -> void:
 	
 	
 func _update_stack_rotations(_delta: float) -> void:
-	_CharacterSpriteStack.control_children_rotation( \
-					_velocity_vector.angle() - deg2rad(90))
+	if health_data.is_alive:
+		_CharacterSpriteStack.control_children_rotation( \
+						_velocity_vector.angle() - deg2rad(90))
 
 
 func die() -> void:
 	_Collision.set_deferred("disabled", true)
-	_CharacterSpriteStack.fade_out_sprites()
-	
+	_CharacterSpriteStack.fade_in_out_sprites(true)

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-whirlwind_as = 1.6
+idle_as = 1.0
+whirlwind_as = 2.2

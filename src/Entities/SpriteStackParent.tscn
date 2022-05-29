@@ -3,6 +3,7 @@
 [ext_resource path="res://src/Entities/SpriteStackParent.gd" type="Script" id=1]
 
 [node name="SpriteStackParent" type="Sprite"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 z_index = 16
 script = ExtResource( 1 )

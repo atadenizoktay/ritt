@@ -85,14 +85,23 @@ func _request_to_play_sound_effect(effect_identifier: String) -> void:
 			% effect_identifier))
 
 
+func _spawn_character() -> void:
+	_CharacterSpriteStack.drop_in_sprites()
+
+
 func die() -> void:
 	pass
 	
 	
 func on_Tween_completed(object: Object, key: NodePath) -> void:
-	if object != self:
-		return
-
 	match key:
 		NodePath(":_temp_additional_velocity_vector"):
 			_current_movement_state = MovementStates.NORMAL
+
+
+func _on_CharacterSpriteStack_StackTween_completed(object: Object, \
+		key: NodePath) -> void:
+	if object == _CharacterSpriteStack.top_sprite and \
+			key == ":offset":
+		_Collision.disabled = false
+		health_data.is_alive = true

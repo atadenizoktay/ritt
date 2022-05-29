@@ -29,11 +29,13 @@ _is_rendering_sprites = true
 _is_rotating_sprites = false
 _stack_position_offset_multiplier = 1.2
 _sprites_y_offset = -3
-_stack_fade_out_duration = 0.6
+_stack_drop_in_duration = 1.6
+_stack_last_sprite_minimum_drop_in_duration = 0.4
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Tween" type="Tween" parent="."]
 

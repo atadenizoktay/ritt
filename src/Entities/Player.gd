@@ -20,12 +20,15 @@ var _current_sword_state: int = SwordStates.IDLE setget \
 
 onready var _PlayerSwordStack: Sprite = \
 		$Stacks/SwordContainer/SwordSpriteStack
+onready var _SwordSpriteStack: Sprite = $Stacks/SwordContainer/SwordSpriteStack
 onready var _SwordAnimationPlayer: AnimationPlayer = $SwordAnimationPlayer
 
 
 func _ready() -> void:
 	_initialize_data_resources()
 	_initialize_signal_connections()
+	_spawn_character()
+	_PlayerSwordStack.position = Vector2(0, 28) # remove
 	
 	
 func _physics_process(delta: float) -> void:
@@ -36,6 +39,8 @@ func _physics_process(delta: float) -> void:
 	
 func _initialize_signal_connections() -> void:
 	BeatManager.connect("beat_dropped", self, "_on_beat_dropped")
+	_CharacterSpriteStack.StackTween.connect("tween_completed", self, \
+			"_on_CharacterSpriteStack_StackTween_completed")
 	_InvulTimer.connect("timeout", health_data, "_on_InvulTimer_timeout")
 
 
@@ -52,7 +57,8 @@ func _control_character_movement(delta: float) -> void:
 	
 
 func _update_stack_rotations(delta: float) -> void:
-	if _current_sword_state == SwordStates.IDLE:
+	if _current_sword_state == SwordStates.IDLE and \
+			health_data.is_alive:
 		if _velocity_vector != Vector2():
 			_CharacterSpriteStack.control_children_rotation( \
 					_velocity_vector.angle() - deg2rad(90))
@@ -63,7 +69,8 @@ func _update_stack_rotations(delta: float) -> void:
 	
 	
 func _update_stack_positions() -> void:
-	if _current_sword_state == SwordStates.IDLE:
+	if _current_sword_state == SwordStates.IDLE and \
+			health_data.is_alive:
 		_PlayerSwordStack.position = Vector2(-28 * sin( \
 				_PlayerSwordStack.reference_sprite.rotation), \
 				28 * cos(_PlayerSwordStack.reference_sprite.rotation))
@@ -90,6 +97,11 @@ func _apply_friction(friction_multiplier: float) -> void:
 		_velocity_vector = Vector2()
 
 
+func _spawn_character() -> void:
+	_CharacterSpriteStack.drop_in_sprites()
+	_SwordSpriteStack.drop_in_sprites()
+	
+	
 func _set_current_sword_state(state: int) -> void:
 	_current_sword_state = state
 	
@@ -115,7 +127,8 @@ func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
 # Checks the attack queue and executes the next attack by playing its
 # animation.
 func _on_beat_dropped() -> void:
-	_SwordAnimationPlayer.play("whirlwind")
+	if health_data.is_alive:
+		_SwordAnimationPlayer.play("whirlwind")
 
 
 func _on_SwordArea_body_entered(body: Node) -> void:
@@ -128,3 +141,13 @@ func _on_SwordArea_body_entered(body: Node) -> void:
 			body.apply_knockback_effect(self, \
 					_combat_stats_data.knockback_power, \
 					_combat_stats_data.knockback_duration)
+
+
+func _on_CharacterSpriteStack_StackTween_completed(object: Object, \
+		key: NodePath) -> void:
+	if object == _CharacterSpriteStack.top_sprite and \
+			key == ":offset":
+		_Collision.disabled = false
+		health_data.is_alive = true
+#		_SwordSpriteStack.visible = true
+#		_SwordSpriteStack.fade_in_out_sprites(false)
