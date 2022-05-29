@@ -79,6 +79,7 @@ config/icon="res://icon.png"
 Mixins="*res://src/Singleton/Mixins.gd"
 BeatManager="*res://src/Singleton/BeatManager.tscn"
 AudioManager="*res://src/Singleton/AudioManager.tscn"
+Events="*res://src/Singleton/Events.gd"
 
 [display]
 
