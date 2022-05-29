@@ -1,5 +1,5 @@
 class_name PlayerSFXData
-extends Resource
+extends CharacterSFXData
 
 
 """

@@ -24,22 +24,37 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Classes/Character.gd"
 }, {
+"base": "Resource",
+"class": "CharacterAnimationData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterAnimationData.gd"
+}, {
+"base": "Resource",
+"class": "CharacterCombatStats",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterCombatStats.gd"
+}, {
+"base": "Resource",
+"class": "CharacterSFXData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterSFXData.gd"
+}, {
 "base": "Node",
 "class": "MidiPlayer",
 "language": "GDScript",
 "path": "res://addons/midi/MidiPlayer.gd"
 }, {
-"base": "Resource",
+"base": "CharacterAnimationData",
 "class": "PlayerAnimationData",
 "language": "GDScript",
 "path": "res://src/Resource/PlayerAnimationData.gd"
 }, {
-"base": "Resource",
+"base": "CharacterCombatStats",
 "class": "PlayerCombatStats",
 "language": "GDScript",
 "path": "res://src/Resource/PlayerCombatStatsData.gd"
 }, {
-"base": "Resource",
+"base": "CharacterSFXData",
 "class": "PlayerSFXData",
 "language": "GDScript",
 "path": "res://src/Resource/PlayerSFXData.gd"
@@ -58,6 +73,9 @@ _global_script_class_icons={
 "AudioStreamPlayerADSR": "",
 "Bank": "",
 "Character": "",
+"CharacterAnimationData": "",
+"CharacterCombatStats": "",
+"CharacterSFXData": "",
 "MidiPlayer": "",
 "PlayerAnimationData": "",
 "PlayerCombatStats": "",
@@ -89,7 +107,7 @@ window/size/resizable=false
 window/size/always_on_top=true
 window/size/test_width=1280
 window/size/test_height=720
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
 [editor_plugins]

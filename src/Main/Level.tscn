@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/Entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Main/Level.gd" type="Script" id=2]
 [ext_resource path="res://src/Entities/Camera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Entities/Enemy.tscn" type="PackedScene" id=4]
 
 [node name="Level" type="Node"]
 script = ExtResource( 2 )
@@ -11,6 +12,15 @@ script = ExtResource( 2 )
 
 [node name="Player" parent="EntityHierarchy" instance=ExtResource( 1 )]
 position = Vector2( 160, 90 )
+
+[node name="Enemy" parent="EntityHierarchy" instance=ExtResource( 4 )]
+position = Vector2( 47, 67 )
+
+[node name="Enemy2" parent="EntityHierarchy" instance=ExtResource( 4 )]
+position = Vector2( 130, 56 )
+
+[node name="Enemy3" parent="EntityHierarchy" instance=ExtResource( 4 )]
+position = Vector2( 81, 122 )
 
 [node name="Camera" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 90 )

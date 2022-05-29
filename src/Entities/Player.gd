@@ -13,16 +13,11 @@ enum SwordStates {
 	ATTACKING = 2
 }
 
-export(Resource) var _player_combat_stats_data: Resource = null
-export(Resource) var _player_animation_data: Resource = null
-
-var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
 var _current_sword_state: int = SwordStates.IDLE
 
-onready var _PlayerSpriteStack: Sprite = $StackSorter/PlayerSpriteStack
 onready var _PlayerSwordStack: Sprite = \
-		$StackSorter/SwordContainer/SwordSpriteStack
+		$Stacks/SwordContainer/SwordSpriteStack
 onready var _SwordAnimationPlayer: AnimationPlayer = $SwordAnimationPlayer
 
 
@@ -31,7 +26,7 @@ func _ready() -> void:
 	
 	
 func _physics_process(delta: float) -> void:
-	_control_player_movement(delta)
+	_control_character_movement(delta)
 	_update_stack_rotations(delta)
 	_update_stack_positions()
 	
@@ -42,25 +37,25 @@ func _initialize_signal_connections() -> void:
 
 # Controls the player movement by first getting player input, and then applying
 # movement or friction depending on it.
-func _control_player_movement(delta: float) -> void:
+func _control_character_movement(delta: float) -> void:
 	var movement_axis: Vector2 = _control_movement_feel_and_get_movement_axis()
 	if movement_axis:
 		_apply_movement(movement_axis * \
-				_player_combat_stats_data.movement_acceleration * delta)
+				_combat_stats_data.movement_acceleration * delta)
 	else:
-		_apply_friction(_player_combat_stats_data.movement_acceleration * delta)
+		_apply_friction(_combat_stats_data.movement_acceleration * delta)
 	move_and_slide(_velocity_vector)
 	
 
 func _update_stack_rotations(delta: float) -> void:
 	if _current_sword_state == SwordStates.IDLE:
 		if _velocity_vector != Vector2():
-			_PlayerSpriteStack.control_children_rotation( \
+			_CharacterSpriteStack.control_children_rotation( \
 					_velocity_vector.angle() - deg2rad(90))
 		_PlayerSwordStack.control_children_rotation( \
 				_PlayerSwordStack.reference_sprite.rotation - \
 				deg2rad(delta * \
-						_player_combat_stats_data.weapon_stack_rotation_speed))
+						_combat_stats_data.weapon_stack_rotation_speed))
 	
 	
 func _update_stack_positions() -> void:
@@ -82,12 +77,6 @@ func _control_movement_feel_and_get_movement_axis() -> Vector2:
 			!= sign(movement_axis.y) else _velocity_vector.y
 	_previous_movement_axis = movement_axis
 	return movement_axis
-	
-	
-func _apply_movement(acceleration_vector: Vector2) -> void:
-	_velocity_vector += acceleration_vector
-	_velocity_vector = _velocity_vector.clamped( \
-			_player_combat_stats_data.max_movement_speed)
 
 
 func _apply_friction(friction_multiplier: float) -> void:
@@ -98,7 +87,7 @@ func _apply_friction(friction_multiplier: float) -> void:
 
 
 func _on_SwordAnimationPlayer_animation_started(anim_name: String) -> void:
-	_SwordAnimationPlayer.playback_speed = _player_animation_data. \
+	_SwordAnimationPlayer.playback_speed = _animation_data. \
 			get("%s_as" % anim_name)
 	match anim_name:
 		"idle":
