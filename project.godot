@@ -30,9 +30,14 @@ _global_script_classes=[ {
 "path": "res://src/Resource/CharacterAnimationData.gd"
 }, {
 "base": "Resource",
-"class": "CharacterCombatStats",
+"class": "CharacterCombatStatsData",
 "language": "GDScript",
-"path": "res://src/Resource/CharacterCombatStats.gd"
+"path": "res://src/Resource/CharacterCombatStatsData.gd"
+}, {
+"base": "Resource",
+"class": "CharacterHealthData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterHealthData.gd"
 }, {
 "base": "Resource",
 "class": "CharacterSFXData",
@@ -49,7 +54,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Resource/PlayerAnimationData.gd"
 }, {
-"base": "CharacterCombatStats",
+"base": "CharacterCombatStatsData",
 "class": "PlayerCombatStats",
 "language": "GDScript",
 "path": "res://src/Resource/PlayerCombatStatsData.gd"
@@ -74,7 +79,8 @@ _global_script_class_icons={
 "Bank": "",
 "Character": "",
 "CharacterAnimationData": "",
-"CharacterCombatStats": "",
+"CharacterCombatStatsData": "",
+"CharacterHealthData": "",
 "CharacterSFXData": "",
 "MidiPlayer": "",
 "PlayerAnimationData": "",

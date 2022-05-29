@@ -15,6 +15,7 @@ enum MovementStates {
 	KNOCKBACKED = 2
 }
 
+export(Resource) var health_data: Resource = null
 export(Resource) var _combat_stats_data: Resource = null
 export(Resource) var _animation_data: Resource = null
 export(Resource) var _sfx_data: Resource = null

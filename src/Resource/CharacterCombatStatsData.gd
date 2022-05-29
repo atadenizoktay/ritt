@@ -1,4 +1,4 @@
-class_name CharacterCombatStats
+class_name CharacterCombatStatsData
 extends Resource
 
 

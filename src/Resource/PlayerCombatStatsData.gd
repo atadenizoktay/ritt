@@ -1,5 +1,5 @@
 class_name PlayerCombatStats
-extends CharacterCombatStats
+extends CharacterCombatStatsData
 
 
 """

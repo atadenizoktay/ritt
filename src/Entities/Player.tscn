@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/Entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/entities/player_spritesheet.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://resources/entities/default_player_combat_stats_data.tres" type="Resource" id=5]
 [ext_resource path="res://resources/entities/default_player_sfx_data.tres" type="Resource" id=6]
 [ext_resource path="res://resources/entities/default_player_animation_data.tres" type="Resource" id=7]
+[ext_resource path="res://resources/entities/default_player_health_data.tres" type="Resource" id=8]
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 9.0
@@ -79,6 +80,7 @@ tracks/2/keys = {
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 1 )
+health_data = ExtResource( 8 )
 _combat_stats_data = ExtResource( 5 )
 _animation_data = ExtResource( 7 )
 _sfx_data = ExtResource( 6 )
@@ -111,7 +113,7 @@ position = Vector2( 0, 1 )
 shape = SubResource( 4 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -5 )
+position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
 [node name="SwordAnimationPlayer" type="AnimationPlayer" parent="."]
