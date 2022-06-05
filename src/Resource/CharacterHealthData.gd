@@ -29,10 +29,9 @@ func reset(owner: KinematicBody2D, invul_timer: Timer) -> void:
 func take_damage(damage_amount: float) -> void:
 	_current_hp = max(0, _current_hp - damage_amount)
 	if not _current_hp:
-		if false: # remove
-			can_get_hit = false
-			is_alive = false
-			_owner.die()
+		can_get_hit = false
+		is_alive = false
+		_owner.die()
 	Events.emit_signal("character_health_changed", _owner)
 
 

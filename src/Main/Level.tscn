@@ -1,15 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Main/Level.gd" type="Script" id=2]
 [ext_resource path="res://src/Entities/Camera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Entities/Enemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/Resource/CharacterHealthData.gd" type="Script" id=5]
-[ext_resource path="res://src/Entities/Arena.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/textures/chessboard.png" type="Texture" id=7]
-[ext_resource path="res://assets/interface/exp_bar_over.png" type="Texture" id=8]
-[ext_resource path="res://assets/interface/exp_bar_under.png" type="Texture" id=9]
-[ext_resource path="res://assets/interface/exp_bar_progress.png" type="Texture" id=10]
 
 [sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
@@ -30,30 +25,6 @@ void fragment() {
 shader = SubResource( 4 )
 shader_param/active = true
 shader_param/speed = 0.32
-
-[sub_resource type="Resource" id=6]
-resource_local_to_scene = true
-script = ExtResource( 5 )
-_max_hp = 4.0
-_invul_duration = 0.2
-
-[sub_resource type="Resource" id=7]
-resource_local_to_scene = true
-script = ExtResource( 5 )
-_max_hp = 4.0
-_invul_duration = 0.2
-
-[sub_resource type="Resource" id=8]
-resource_local_to_scene = true
-script = ExtResource( 5 )
-_max_hp = 4.0
-_invul_duration = 0.2
-
-[sub_resource type="Resource" id=9]
-resource_local_to_scene = true
-script = ExtResource( 5 )
-_max_hp = 4.0
-_invul_duration = 0.2
 
 [node name="Level" type="Node"]
 script = ExtResource( 2 )
@@ -79,43 +50,6 @@ margin_bottom = 244.0
 mouse_filter = 2
 color = Color( 0, 0, 0, 0.784314 )
 
-[node name="UI" type="CanvasLayer" parent="."]
-layer = 128
-
-[node name="C" type="Control" parent="UI"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="MC" type="MarginContainer" parent="UI/C"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = -8.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="CC" type="CenterContainer" parent="UI/C/MC"]
-margin_right = 320.0
-margin_bottom = 172.0
-
-[node name="ExpBar" type="TextureProgress" parent="UI/C/MC/CC"]
-margin_left = 24.0
-margin_top = 4.0
-margin_right = 296.0
-margin_bottom = 168.0
-value = 50.0
-texture_under = ExtResource( 9 )
-texture_over = ExtResource( 8 )
-texture_progress = ExtResource( 10 )
-fill_mode = 4
-
-[node name="Arena" parent="." instance=ExtResource( 6 )]
-visible = false
-
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 2
 
@@ -134,22 +68,16 @@ position = Vector2( 160, 90 )
 
 [node name="Enemy" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 64, 64 )
-health_data = SubResource( 6 )
 
 [node name="Enemy2" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 256, 64 )
-health_data = SubResource( 7 )
 
 [node name="Enemy3" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 64, 128 )
-health_data = SubResource( 8 )
 
 [node name="Enemy4" parent="EntityHierarchy" instance=ExtResource( 4 )]
 position = Vector2( 256, 128 )
-health_data = SubResource( 9 )
 
 [node name="Camera" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 90 )
 offset = Vector2( 0, 0 )
-
-[node name="Line2D" type="Line2D" parent="."]

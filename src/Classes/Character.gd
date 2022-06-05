@@ -67,6 +67,10 @@ func _control_knowckback_wobble() -> void:
 				1.5, 2)
 
 
+# Creates a knockback vector from A to B where A is the attacker position and
+# B is the attacked entity where the vector length depends on power. After the
+# knockback vector is created, a tween is used to interpolate it to the zero
+# vector depending on the given knockback duration.
 func apply_knockback_effect(attacker: Object, power: int = 100, \
 		duration: float = 0.4) -> void:
 	_current_movement_state = MovementStates.KNOCKBACKED

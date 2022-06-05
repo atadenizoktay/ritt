@@ -47,7 +47,8 @@ func _shake_the_screen() -> void:
 			Tween.EASE_OUT)
 	_Tween.start()
 	
-	
+
+# Creates the heartbeat effect.
 func _on_beat_dropped() -> void:
 	_Tween.remove(self, "zoom")
 	_Tween.interpolate_property(self, "zoom", _beat_zoom_in_vector, \

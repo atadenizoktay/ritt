@@ -70,7 +70,9 @@ func _update_stack_rotations(delta: float) -> void:
 				deg2rad(delta * \
 						_combat_stats_data.weapon_stack_rotation_speed))
 	
-	
+
+# Rotates a stack depending on a position vector for each frame. Current state
+# of this function rotates the sword stack around the player in a circle.
 func _update_stack_positions() -> void:
 	if _current_sword_state == SwordStates.IDLE and \
 			health_data.is_alive:

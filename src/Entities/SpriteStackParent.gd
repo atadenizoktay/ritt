@@ -84,7 +84,7 @@ func _render_sprites() -> void:
 
 
 func drop_in_sprites() -> void:
-	var delay: float = 5 # remove
+	var delay: float = 0
 	var delay_increment: float = _stack_drop_in_duration / hframes
 	for child in get_children():
 		if child is Sprite:
@@ -97,7 +97,6 @@ func drop_in_sprites() -> void:
 					Tween.TRANS_QUAD, Tween.EASE_OUT, delay)
 			StackTween.start()
 			delay += delay_increment
-	yield(get_tree().create_timer(5), "timeout") # remove
 	visible = true
 	
 	

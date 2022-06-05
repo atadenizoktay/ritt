@@ -25,6 +25,9 @@ func _ready() -> void:
 	_create_a_beat_counter()
 
 
+# Instances and adds a beat counter to the scene. If there already exists a
+# beat counter node, waits for the current music loop to finish to make the
+# music and beat signals in sync.
 func _create_a_beat_counter() -> void:
 	if _current_beat_counter:
 		_current_beat_counter.queue_free()
@@ -38,6 +41,10 @@ func _create_a_beat_counter() -> void:
 	_BeatPlayer.play()
 
 
+# If a note starts according to the MIDI file, emits a signal, and increases
+# the beat index. If the beat index reaches a specific number, this function
+# creates a new beat counter because the used addon for the MIDI player does
+# not work well when its looping property is on.
 func _on_beat_counter_midi_event(\
 		_channel: MidiPlayer.GodotMIDIPlayerChannelStatus, \
 		event: SMF.MIDIEvent) -> void:
