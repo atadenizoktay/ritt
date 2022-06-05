@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Entities/Camera.gd" type="Script" id=1]
+
+[node name="Camera" type="Camera2D"]
+offset = Vector2( 160, 90 )
+current = true
+script = ExtResource( 1 )
+_beat_zoom_in_vector = Vector2( 0.8, 0.8 )
+_beat_zoom_tween_duration = 0.52
+_max_shake_power = 16
+_screen_shake_duration = 0.32
+
+[node name="Tween" type="Tween" parent="."]

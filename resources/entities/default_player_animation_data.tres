@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/Resource/PlayerAnimationData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+idle_as = 1.0
+whirlwind_as = 2.2
+basic_as = 1.6
+flurry_as = 1.6
+slice_as = 1.6

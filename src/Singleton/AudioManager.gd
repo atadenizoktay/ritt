@@ -8,23 +8,16 @@ extends Node
 """
 
 
-signal beat_dropped
-
-onready var _BeatPlayer: AudioStreamPlayer = $BeatPlayer
-onready var _BeatCounter: MidiPlayer = $BeatCounter
+onready var _SFXASPS: Node = $SFXASPS
 
 
-func _ready() -> void:
-	_initialize_beat_related_nodes()
-
-
-func _initialize_beat_related_nodes() -> void:
-	_BeatPlayer.play()
-	_BeatCounter.play()
-	
-	
-func _on_BeatCounter_midi_event(\
-		_channel: MidiPlayer.GodotMIDIPlayerChannelStatus, \
-		event: SMF.MIDIEvent) -> void:
-	if event.type == SMF.MIDIEventType.note_on:
-		emit_signal("beat_dropped")
+func play_sound_effect(sfx_path: String, with_db: float) -> void:
+	var sfx_stream: AudioStreamSample = load(sfx_path)
+	var temp_asp: AudioStreamPlayer = AudioStreamPlayer.new()
+	_SFXASPS.add_child(temp_asp)
+	temp_asp.stream = sfx_stream
+	temp_asp.volume_db = with_db
+	temp_asp.pause_mode = PAUSE_MODE_PROCESS
+	temp_asp.play()
+	yield(temp_asp, "finished")
+	temp_asp.queue_free()

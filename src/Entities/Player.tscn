@@ -1,36 +1,309 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/Entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/entities/player_spritesheet.png" type="Texture" id=2]
 [ext_resource path="res://src/Entities/SpriteStackParent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/entities/sword_spritesheet.png" type="Texture" id=4]
+[ext_resource path="res://resources/entities/default_player_combat_stats_data.tres" type="Resource" id=5]
+[ext_resource path="res://resources/entities/default_player_sfx_data.tres" type="Resource" id=6]
+[ext_resource path="res://resources/entities/default_player_animation_data.tres" type="Resource" id=7]
+[ext_resource path="res://resources/entities/default_player_health_data.tres" type="Resource" id=8]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 9.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 7.0
+radius = 6.0
 height = 0.0
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="Animation" id=6]
+resource_name = "basic"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1 ),
+"update": 0,
+"values": [ 0.0, 64.0, -64.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "flurry"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 75.0, -75.0, 75.0, -75.0, 75.0, -75.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "slice"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1 ),
+"update": 0,
+"values": [ 0.0, 64.0, -180.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "whirlwind"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stacks/SwordContainer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 0.16, 0.38, 0.16, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0, -180.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "swing_low" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "swing_high" ],
+"method": "_request_to_play_sound_effect"
+}, {
+"args": [ "windup" ],
+"method": "_request_to_play_sound_effect"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "_set_current_sword_state"
+}, {
+"args": [ 3 ],
+"method": "_set_current_sword_state"
+} ]
+}
+
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
+collision_mask = 3
 script = ExtResource( 1 )
+health_data = ExtResource( 8 )
+_combat_stats_data = ExtResource( 5 )
+_animation_data = ExtResource( 7 )
+_sfx_data = ExtResource( 6 )
 
-[node name="StackSorter" type="YSort" parent="."]
+[node name="Stacks" type="YSort" parent="."]
 
-[node name="PlayerSpriteStack" parent="StackSorter" instance=ExtResource( 3 )]
+[node name="CharacterSpriteStack" parent="Stacks" instance=ExtResource( 3 )]
+visible = true
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 hframes = 12
+_is_rendering_sprites = true
 _is_rotating_sprites = false
 _stack_position_offset_multiplier = 1.2
+_sprites_y_offset = -3
+_stack_drop_in_duration = 1.6
 
-[node name="SwordSpriteStack" parent="StackSorter" instance=ExtResource( 3 )]
-position = Vector2( 0, 24 )
+[node name="SwordContainer" type="Node2D" parent="Stacks"]
+z_index = -8
+
+[node name="SwordSpriteStack" parent="Stacks/SwordContainer" instance=ExtResource( 3 )]
+visible = true
+z_index = 8
 texture = ExtResource( 4 )
 hframes = 8
+_is_rendering_sprites = true
 _is_rotating_sprites = false
-_stack_position_offset_multiplier = 0.6
+_sprite_inital_modulation = Color( 1, 1, 1, 0 )
+
+[node name="SwordArea" type="Area2D" parent="Stacks/SwordContainer/SwordSpriteStack"]
+monitorable = false
+
+[node name="Collision" type="CollisionShape2D" parent="Stacks/SwordContainer/SwordSpriteStack/SwordArea"]
+shape = SubResource( 4 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
 shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
+
+[node name="SwordAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/basic = SubResource( 6 )
+anims/flurry = SubResource( 7 )
+anims/idle = SubResource( 3 )
+anims/slice = SubResource( 2 )
+anims/whirlwind = SubResource( 5 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="InvulTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Stacks/SwordContainer/SwordSpriteStack/SwordArea" to="." method="_on_SwordArea_body_entered"]
+[connection signal="animation_finished" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_finished"]
+[connection signal="animation_started" from="SwordAnimationPlayer" to="." method="_on_SwordAnimationPlayer_animation_started"]

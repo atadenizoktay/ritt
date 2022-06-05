@@ -19,10 +19,50 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/midi/Bank.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://src/Classes/Character.gd"
+}, {
+"base": "Resource",
+"class": "CharacterAnimationData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterAnimationData.gd"
+}, {
+"base": "Resource",
+"class": "CharacterCombatStatsData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterCombatStatsData.gd"
+}, {
+"base": "Resource",
+"class": "CharacterHealthData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterHealthData.gd"
+}, {
+"base": "Resource",
+"class": "CharacterSFXData",
+"language": "GDScript",
+"path": "res://src/Resource/CharacterSFXData.gd"
+}, {
 "base": "Node",
 "class": "MidiPlayer",
 "language": "GDScript",
 "path": "res://addons/midi/MidiPlayer.gd"
+}, {
+"base": "CharacterAnimationData",
+"class": "PlayerAnimationData",
+"language": "GDScript",
+"path": "res://src/Resource/PlayerAnimationData.gd"
+}, {
+"base": "CharacterCombatStatsData",
+"class": "PlayerCombatStats",
+"language": "GDScript",
+"path": "res://src/Resource/PlayerCombatStatsData.gd"
+}, {
+"base": "CharacterSFXData",
+"class": "PlayerSFXData",
+"language": "GDScript",
+"path": "res://src/Resource/PlayerSFXData.gd"
 }, {
 "base": "Reference",
 "class": "SMF",
@@ -37,7 +77,15 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AudioStreamPlayerADSR": "",
 "Bank": "",
+"Character": "",
+"CharacterAnimationData": "",
+"CharacterCombatStatsData": "",
+"CharacterHealthData": "",
+"CharacterSFXData": "",
 "MidiPlayer": "",
+"PlayerAnimationData": "",
+"PlayerCombatStats": "",
+"PlayerSFXData": "",
 "SMF": "",
 "SoundFont": ""
 }
@@ -52,8 +100,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-AudioManager="*res://src/Singleton/AudioManager.tscn"
 Mixins="*res://src/Singleton/Mixins.gd"
+BeatManager="*res://src/Singleton/BeatManager.tscn"
+AudioManager="*res://src/Singleton/AudioManager.tscn"
+Events="*res://src/Singleton/Events.gd"
 
 [display]
 
@@ -69,6 +119,16 @@ window/stretch/aspect="keep"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/midi/plugin.cfg" )
+
+[importer_defaults]
+
+texture={
+"detect_3d": false,
+"flags/filter": false
+}
+ogg_vorbis={
+"loop": false
+}
 
 [input]
 

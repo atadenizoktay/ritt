@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/audio/beat/main.ogg" type="AudioStream" id=1]
+[ext_resource path="res://src/Singleton/BeatManager.gd" type="Script" id=2]
+
+[node name="BeatManager" type="Node"]
+pause_mode = 1
+script = ExtResource( 2 )
+
+[node name="BeatPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Beat"

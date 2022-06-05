@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Character
 
 
 """
@@ -8,45 +8,77 @@ extends KinematicBody2D
 """
 
 
-export(int, 100, 1000, 10) var _max_movement_speed: int = 120
-export(int, 1280, 3840, 10) var _movement_acceleration: int = 2560
+enum SwordStates {
+	IDLE = 0,
+	PREPARING_TO_ATTACK = 1,
+	ATTACKING = 2,
+	RECOVERY = 3
+}
 
-var _velocity_vector: Vector2 = Vector2()
 var _previous_movement_axis: Vector2 = Vector2()
+var _current_sword_state: int = SwordStates.IDLE setget \
+		_set_current_sword_state
+var _attack_commands_queue: Array = ["slice", "basic", "flurry", \
+		"whirlwind"]
 
-onready var _PlayerSpriteStack: Sprite = $StackSorter/PlayerSpriteStack
-onready var _PlayerSwordStack: Sprite = $StackSorter/SwordSpriteStack
+onready var _PlayerSwordStack: Sprite = \
+		$Stacks/SwordContainer/SwordSpriteStack
+onready var _SwordSpriteStack: Sprite = $Stacks/SwordContainer/SwordSpriteStack
+onready var _SwordAnimationPlayer: AnimationPlayer = $SwordAnimationPlayer
 
+
+func _ready() -> void:
+	_initialize_data_resources()
+	_initialize_signal_connections()
+	_spawn_character()
+	_PlayerSwordStack.position = Vector2(0, 28) # remove
+	
 	
 func _physics_process(delta: float) -> void:
-	_control_player_movement(delta)
-	_update_stack_rotations()
+	_control_character_movement(delta)
+	_update_stack_rotations(delta)
 	_update_stack_positions()
 	
+	
+func _initialize_signal_connections() -> void:
+	BeatManager.connect("beat_dropped", self, "_on_beat_dropped")
+	_CharacterSpriteStack.StackTween.connect("tween_completed", self, \
+			"_on_CharacterSpriteStack_StackTween_completed")
+	_InvulTimer.connect("timeout", health_data, "_on_InvulTimer_timeout")
+
 
 # Controls the player movement by first getting player input, and then applying
 # movement or friction depending on it.
-func _control_player_movement(delta: float) -> void:
+func _control_character_movement(delta: float) -> void:
 	var movement_axis: Vector2 = _control_movement_feel_and_get_movement_axis()
 	if movement_axis:
-		_apply_movement(movement_axis * _movement_acceleration * delta)
+		_apply_movement(movement_axis * \
+				_combat_stats_data.movement_acceleration * delta)
 	else:
-		_apply_friction(_movement_acceleration * delta)
+		_apply_friction(_combat_stats_data.movement_acceleration * delta)
 	move_and_slide(_velocity_vector)
 	
 
-func _update_stack_rotations() -> void:
-	if _velocity_vector != Vector2():
-		_PlayerSpriteStack.control_sprites_rotation(_velocity_vector.angle() - \
-				deg2rad(90))
-		_PlayerSwordStack.control_sprites_rotation(_velocity_vector.angle() - \
-				deg2rad(90))
+func _update_stack_rotations(delta: float) -> void:
+	if _current_sword_state == SwordStates.IDLE and \
+			health_data.is_alive:
+		if _velocity_vector != Vector2():
+			_CharacterSpriteStack.control_children_rotation( \
+					_velocity_vector.angle() - deg2rad(90))
+		_PlayerSwordStack.control_children_rotation( \
+				_PlayerSwordStack.reference_sprite.rotation - \
+				deg2rad(delta * \
+						_combat_stats_data.weapon_stack_rotation_speed))
 	
-	
+
+# Rotates a stack depending on a position vector for each frame. Current state
+# of this function rotates the sword stack around the player in a circle.
 func _update_stack_positions() -> void:
-	_PlayerSwordStack.position = Vector2(-24 * sin( \
-			_PlayerSwordStack.get_children()[0].rotation), \
-			24 * cos(_PlayerSwordStack.get_children()[0].rotation))
+	if _current_sword_state == SwordStates.IDLE and \
+			health_data.is_alive:
+		_PlayerSwordStack.position = Vector2(-28 * sin( \
+				_PlayerSwordStack.reference_sprite.rotation), \
+				28 * cos(_PlayerSwordStack.reference_sprite.rotation))
 			
 	
 # This function returns the movement axis depending on user input. It
@@ -61,11 +93,6 @@ func _control_movement_feel_and_get_movement_axis() -> Vector2:
 			!= sign(movement_axis.y) else _velocity_vector.y
 	_previous_movement_axis = movement_axis
 	return movement_axis
-	
-	
-func _apply_movement(acceleration_vector: Vector2) -> void:
-	_velocity_vector += acceleration_vector
-	_velocity_vector = _velocity_vector.clamped(_max_movement_speed)
 
 
 func _apply_friction(friction_multiplier: float) -> void:
@@ -73,3 +100,66 @@ func _apply_friction(friction_multiplier: float) -> void:
 		_velocity_vector -= _velocity_vector.normalized() * friction_multiplier
 	else:
 		_velocity_vector = Vector2()
+
+
+func _spawn_character() -> void:
+	_CharacterSpriteStack.drop_in_sprites()
+	_SwordSpriteStack.drop_in_sprites()
+	
+	
+func _set_current_sword_state(state: int) -> void:
+	_current_sword_state = state
+	
+	
+func _on_SwordAnimationPlayer_animation_started(anim_name: String) -> void:
+	_SwordAnimationPlayer.playback_speed = _animation_data. \
+			get("%s_as" % anim_name)
+	match anim_name:
+		"idle":
+			_current_sword_state = SwordStates.IDLE
+		"basic", "slice", "flurry", "whirlwind":
+			_current_sword_state = SwordStates.PREPARING_TO_ATTACK
+
+
+func _on_SwordAnimationPlayer_animation_finished(anim_name: String) -> void:
+	match anim_name:
+		"idle":
+			_SwordAnimationPlayer.play("idle")
+		"basic", "slice", "flurry", "whirlwind":
+			_SwordAnimationPlayer.play("idle")
+
+
+# Checks the attack queue and executes the next attack by playing its
+# animation.
+func _on_beat_dropped() -> void:
+	if health_data.is_alive:
+		_queue_attack_and_play_animation()
+
+
+func _queue_attack_and_play_animation() -> void:
+	var command_name: String = _attack_commands_queue[0]
+	_attack_commands_queue.pop_front()
+	_attack_commands_queue.append(command_name)
+	_SwordAnimationPlayer.play(command_name)
+	
+
+func _on_SwordArea_body_entered(body: Node) -> void:
+	if body.is_in_group("Enemy"):
+		if _current_sword_state == SwordStates.ATTACKING and \
+				body.health_data.can_get_hit:
+			_request_to_play_sound_effect("hit")
+			body.health_data.can_get_hit = false
+			body.health_data.take_damage(_combat_stats_data.attack_damage)
+			body.apply_knockback_effect(self, \
+					_combat_stats_data.knockback_power, \
+					_combat_stats_data.knockback_duration)
+
+
+func _on_CharacterSpriteStack_StackTween_completed(object: Object, \
+		key: NodePath) -> void:
+	if object == _CharacterSpriteStack.top_sprite and \
+			key == ":offset":
+		_Collision.disabled = false
+		health_data.is_alive = true
+#		_SwordSpriteStack.visible = true
+#		_SwordSpriteStack.fade_in_out_sprites(false)

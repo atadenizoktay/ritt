@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/Resource/PlayerCombatStatsData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+max_movement_speed = 140
+movement_acceleration = 2560
+knockback_power = 380
+knockback_duration = 0.52
+attack_damage = 2
+weapon_stack_rotation_speed = 92
